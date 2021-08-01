@@ -1,0 +1,13 @@
+{
+  "name": "lvl1",
+  "version": "1.0.0",
+  "description": "### Instructions",
+  "main": "Vehicle.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
