@@ -29,7 +29,7 @@ function registerVehicle(fleetId, plate) {
   }
 }
 
-function localizeVehicle(fleetId, plate, lat, lng, alt) {
+function localizeVehicle(fleetId, plate, lng, lat, alt) {
   const fleet = users.find(user => user.getFleetId() === fleetId).fleet;
   const vehicle = fleet.vehicles.find(vehicle => vehicle.plate === plate);
 
@@ -41,11 +41,5 @@ function localizeVehicle(fleetId, plate, lat, lng, alt) {
   }
 }
 
-export { createUser, createFleet, registerVehicle, localizeVehicle }
+export { createUser, createFleet, registerVehicle, localizeVehicle, Vehicle, User, users }
 
-console.log("user creation: ", createUser("Bob Foobar"))
-console.log("fleet creation: ", createFleet("Bob Foobar"))
-console.log("register vehicle: ", registerVehicle(users[0].getFleetId(), "88-gfh-46"))
-console.log("register same vehicle: ", registerVehicle(users[0].getFleetId(), "88-gfh-46"))
-console.log("park vehicle", localizeVehicle(users[0].getFleetId(), "88-gfh-46", "0.123", "0.456", "0.0008"))
-console.log("park same vehicle", localizeVehicle(users[0].getFleetId(), "88-gfh-46", "0.123", "0.456", "0.0008"))

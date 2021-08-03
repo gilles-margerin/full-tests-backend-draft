@@ -2,7 +2,7 @@ export default class User {
   constructor(id) {
     this.id =  id ? id : Math.random().toString(36).substr(2);
     this.fleet = {
-      id: Math.random().toString(10).substr(10),
+      id: Math.floor(Math.random()*(999999999-1+1)+1),
       vehicles: []
     }
   } 
