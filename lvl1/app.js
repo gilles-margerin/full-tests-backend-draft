@@ -3,8 +3,12 @@ import User from "./User.js";
 
 const users = [];
 
-const bob = new User("bob");
-users.push(bob);
+function createUser(userId) {
+  const user = new User(userId)
+
+  users.push(user)
+  return user.id;
+}
 
 function createFleet(userId) {
   const user = users.find((user) => user.id === userId);
@@ -37,24 +41,11 @@ function localizeVehicle(fleetId, plate, lat, lng, alt) {
   }
 }
 
-console.log("fleet id: ", createFleet(bob.getId()));
-console.log(
-  "register vehicle: ",
-  registerVehicle(bob.getFleetId(), "88-zz-99")
-);
-console.log(
-  "register vehicle: ",
-  registerVehicle(bob.getFleetId(), "88-zz-99")
-);
-console.log(
-  "localize vehicle: ",
-  localizeVehicle(bob.getFleetId(), "88-zz-99", "0.1456", "0.157897")
-)
-console.log(
-  "localize vehicle: ",
-  localizeVehicle(bob.getFleetId(), "88-zz-99", "0.1456", "0.157897")
-)
+export { createUser, createFleet, registerVehicle, localizeVehicle }
 
-
-
-//export { bob, createFleet, registerVehicle}
+console.log("user creation: ", createUser("Bob Foobar"))
+console.log("fleet creation: ", createFleet("Bob Foobar"))
+console.log("register vehicle: ", registerVehicle(users[0].getFleetId(), "88-gfh-46"))
+console.log("register same vehicle: ", registerVehicle(users[0].getFleetId(), "88-gfh-46"))
+console.log("park vehicle", localizeVehicle(users[0].getFleetId(), "88-gfh-46", "0.123", "0.456", "0.0008"))
+console.log("park same vehicle", localizeVehicle(users[0].getFleetId(), "88-gfh-46", "0.123", "0.456", "0.0008"))
