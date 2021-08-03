@@ -12,10 +12,11 @@ export default class Vehicle {
   }
 
   getDetails() {
-    return `${this.type} ${this.plate}, made by ${this.make ? this.make : "unknown brand"}, ${this.model ? `model ${this.model}` : "unknown model"} of ${this.year ? `${this.year} year` : "unknown year"}`
+    return `${this.type} ${this.plate} ${this.make ? ` made by ${this.make}` : ""}${this.model ? ` model ${this.model}` : ""}${this.year ? ` of ${this.year} year` : ""}`
   } 
 
   setCoordinates(lat, lng, alt = "0") {
+    this.parked = true;
     this.lat = lat;
     this.lng = lng;
     this.alt = alt;
