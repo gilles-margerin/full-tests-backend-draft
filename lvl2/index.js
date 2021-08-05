@@ -3,7 +3,6 @@ import { Command } from "commander";
 import dotenv from "dotenv";
 import { MongoClient } from "mongodb";
 import connection from "./connection.js";
-import mongoose from "mongoose";
 dotenv.config();
 
 import User from "./domain/User.js";
@@ -89,17 +88,52 @@ program
         
       const result = await fleet.updateOne({
         _id: Number(fleetId)
-      }, {$set: {
-        vehicles: {
-          [plate]:  {
-            lng: Number(lng),
-            lat: Number(lat),
-            alt: Number(alt)
+      }, [
+        {
+          $set: {
+            vehicles: {
+              [plate]: {
+                lng: {
+                  $cond: {
+                    if: {
+                      notSame: { $ne: ["$lng", lng] },
+                    },
+                    then: lng,
+                    else: "$lng"
+                  }
+                },
+                lat: {
+                  $cond: {
+                    if: {
+                      notSame: { $ne: ["$lat", lat] }
+                    }, 
+                    then: lat,
+                    else: "$lat"
+                  }
+                },
+                alt: {
+                  $cond: {
+                    if: {
+                      notSame: { $ne: ["$alt", alt] },
+                    },
+                    then: alt,
+                    else: "$alt"
+                  }
+                }
+                
+
+              }
+            }
           }
         }
-      }});
+      ]);
 
-      console.log(result)
+      if (result.modifiedCount === 0) {
+        throw "Vehicule already parked here"
+      } else {
+        console.log("Vehicule parked")
+        return;
+      }
     } catch (err) {
       console.error(err);
     } finally {
