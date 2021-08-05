@@ -3,6 +3,7 @@ import { Command } from "commander";
 import dotenv from "dotenv";
 import { MongoClient } from "mongodb";
 import connection from "./connection.js";
+import mongoose from "mongoose";
 dotenv.config();
 
 import User from "./domain/User.js";
@@ -25,8 +26,8 @@ program
       const fleet = new Fleet({
         _id: user.fleetsRefs[0],
         vehicles: new Map(),
-        userId: userId
-      })
+        userId: userId,
+      });
 
       const db = await connection(client);
       const newUser = await db.collection("users").insertOne(user);
@@ -56,13 +57,20 @@ program
         lat: -500,
         alt: -500,
       });
+
       const db = await connection(client);
-      const result = await db.collection("fleets").findOneAndUpdate({ _id: Number(fleetId) }, {$set: {
-        vehicles: {
-          [plate]: vehicle
+      const result = await db.collection("fleets").findOneAndUpdate(
+        { _id: Number(fleetId) },
+        {
+          $set: {
+            vehicles: {
+              [plate]: vehicle,
+            },
+          },
         }
-      }});
-      console.log(result)
+      );
+
+      console.log(result);
     } catch (err) {
       console.error(err);
     } finally {
@@ -73,8 +81,30 @@ program
 program
   .command("localize-vehicle")
   .arguments("<fleetId> <plate> lng lat [alt]")
-  .action(function () {
-    console.log(arguments["6"].args);
+  .action(async (fleetId, plate, lng, lat, alt) => {
+    try {
+      const db = await connection(client);
+      const fleet = await db
+        .collection("fleets");
+        
+      const result = await fleet.updateOne({
+        _id: Number(fleetId)
+      }, {$set: {
+        vehicles: {
+          [plate]:  {
+            lng: Number(lng),
+            lat: Number(lat),
+            alt: Number(alt)
+          }
+        }
+      }});
+
+      console.log(result)
+    } catch (err) {
+      console.error(err);
+    } finally {
+      client.close();
+    }
   });
 
 program.parse(process.argv);
