@@ -5,9 +5,9 @@ import { MongoClient } from "mongodb";
 import connection from "./connection.js";
 dotenv.config();
 
-import User from "./domain/User.js";
-import Fleet from "./domain/Fleet.js";
-import Vehicle from "./domain/Vehicle.js";
+import User from "../domain/User.js";
+import Fleet from "../domain/Fleet.js";
+import Vehicle from "../domain/Vehicle.js";
 
 const client = new MongoClient(process.env.MONGO_URI);
 const program = new Command();
