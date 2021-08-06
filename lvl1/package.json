@@ -1,8 +1,8 @@
 {
   "name": "lvl1",
   "version": "1.0.0",
-  "description": "### Instructions",
-  "main": "Vehicle.js",
+  "description": "Fulll tests backend: ddd-and-cqs-level-1",
+  "main": "app/app.js",
   "type": "module",
   "scripts": {
     "test": "mocha"
