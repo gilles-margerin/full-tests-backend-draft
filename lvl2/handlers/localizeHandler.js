@@ -45,9 +45,15 @@ export default async function localizeHandler(fleetId, plate, lng, lat, alt, cli
     );
 
     if (result.modifiedCount === 0) {
-      throw "Vehicule already parked here";
+      throw "Error: Vehicule already parked here";
     } else {
-      console.log("Vehicule parked");
+      console.log({
+        parkingCoordinates: {
+          lng: lng,
+          lat: lat,
+          alt: alt
+        }
+      });
       return;
     }
   } catch (err) {

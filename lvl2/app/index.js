@@ -14,22 +14,25 @@ const program = new Command();
 
 program
   .command("create")
-  .argument("<userId>")
+  .argument("<userId>", "user to create or add a fleet to")
+  .description("creates a new user with a default fleet number, or add a new fleet to an existing user")
   .action((userId) => {
     createHandler(userId, client, connection)
   });
 
 program
   .command("register-vehicle")
-  .arguments("<fleetId> <plate>")
-  .action(async (fleetId, plate) => {
+  .arguments("<fleetId> <plate>", "fleet to record vehicle, plate identifying vehicle")
+  .description("register a new vehicle into an existing fleet")
+  .action((fleetId, plate) => {
     registerHandler(fleetId, plate, client, connection)
   }); 
 
 program
   .command("localize-vehicle")
-  .arguments("<fleetId> <plate> lng lat [alt]")
-  .action(async (fleetId, plate, lng, lat, alt) => {
+  .arguments("<fleetId> <plate> lng lat [alt]", "parking coordinates")
+  .description("set parking coordinates of a registered vehicle")
+  .action((fleetId, plate, lng, lat, alt) => {
     localizeHandler(fleetId, plate, lng, lat, alt, client, connection)
   });
 
