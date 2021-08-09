@@ -17,7 +17,7 @@ fleet <fleetId> <plate>
 To set a registered vehicle parking coordinates:
 fleet <fleetId> <plate> <lat> <long> [alt]
 
-Database connction's options and configueration has to be set by project's user.
+Database connction's options and configuration has to be set by project's user.
 ```
 
 ### Issues
